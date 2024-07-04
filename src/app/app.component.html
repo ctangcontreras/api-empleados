@@ -1,0 +1,12 @@
+<div *ngIf="isAuthenticated; else loginTemplate">
+  <div fxLayout="column" class="header-1 font-size-all">
+    <div fxFlexOffset="2" class="titulo" fxLayout="row" fxLayoutGap="8px">
+      <button mat-raised-button color="primary" >Cerrar sesión</button>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loginTemplate>
+  <router-outlet></router-outlet>
+</ng-template>

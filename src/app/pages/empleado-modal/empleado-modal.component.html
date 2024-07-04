@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Agregar Empleado</h2>
+<form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Nombres</mat-label>
+    <input matInput formControlName="nombres">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Apellidos</mat-label>
+    <input matInput formControlName="apellidos">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Edad</mat-label>
+    <input matInput formControlName="edad" type="number">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Fecha de Nacimiento</mat-label>
+    <input matInput formControlName="fechaNacimiento" type="date">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Salario</mat-label>
+    <input matInput formControlName="salario" type="number">
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+  </div>
+</form>
