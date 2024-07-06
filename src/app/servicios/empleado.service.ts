@@ -19,7 +19,7 @@ export class EmpleadoService {
 
 
   getEmpleadoById(data: any): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/getEmpleado/${data}`).pipe(
+    return this.http.get<any>(`${this.apiUrl}/getEmplado/${data}`).pipe(
       catchError(this.handleError)
     );
   }

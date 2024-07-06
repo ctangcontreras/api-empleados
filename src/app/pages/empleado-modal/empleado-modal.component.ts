@@ -1,39 +1,66 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EmpleadoService } from '../../servicios/empleado.service';
 
 @Component({
   selector: 'app-empleado-modal',
   templateUrl: './empleado-modal.component.html',
   styleUrls: ['./empleado-modal.component.css']
 })
-export class EmpleadoModalComponent {
+export class EmpleadoModalComponent implements OnInit {
   empleadoForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<EmpleadoModalComponent>,
     private fb: FormBuilder,
-    private empleadoService: EmpleadoService
+    public dialogRef: MatDialogRef<EmpleadoModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.empleadoForm = this.fb.group({
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      edad: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
-      salario: ['', Validators.required]
+      idEmpleado: [{ value: data.empleado?.idEmpleado || '', disabled: true }, Validators.required],
+      nombres: [data.empleado?.nombres || '', Validators.required],
+      apellidoPaterno: [data.empleado?.apellidoPaterno || '', Validators.required],
+      apellidoMaterno: [data.empleado?.apellidoMaterno || '', Validators.required],
+      edad: [data.empleado?.edad || '', Validators.required],
+      fechaNacimiento: [this.convertirFecha(data.empleado?.fechaNacimiento) || '', Validators.required],
+      salario: [data.empleado?.salario || '', Validators.required],
+      idUsuario: [data.empleado?.idUsuario || '', Validators.required],
     });
   }
 
-  onSubmit(): void {
-    if (this.empleadoForm.valid) {
-      this.empleadoService.saveEmpleado(this.empleadoForm.value).subscribe(() => {
-        this.dialogRef.close(true);
-      });
+  ngOnInit(): void {
+    if (this.data.modo === 'editar' && this.data.empleado?.fechaNacimiento) {
+      const fecha = this.convertirFecha(this.data.empleado.fechaNacimiento);
+      this.empleadoForm.patchValue({ fechaNacimiento: fecha });
     }
   }
 
-  onCancel(): void {
+  convertirFecha(fechaArray: number[]): Date | null {
+    if (!fechaArray) {
+      return null;
+    }
+    const fecha = new Date(fechaArray[0], fechaArray[1] - 1, fechaArray[2]);
+    return fecha;
+  }
+
+  onGuardar(): void {
+    if (this.empleadoForm.valid) {
+      const formData = this.empleadoForm.getRawValue();
+      formData.fechaNacimiento = this.formatFechaToString(new Date(formData.fechaNacimiento));
+      this.dialogRef.close(formData);
+    }
+  }
+
+  formatFechaToString(fecha: Date): string {
+    const year = fecha.getFullYear();
+    const month = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const day = fecha.getDate().toString().padStart(2, '0');
+    const hours = '00';
+    const minutes = '00';
+    const seconds = '00';
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  onCancelar(): void {
     this.dialogRef.close();
   }
 }

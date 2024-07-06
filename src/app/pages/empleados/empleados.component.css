@@ -1,0 +1,41 @@
+.empleados-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+table {
+  width: 80%;
+  margin-top: 20px;
+}
+
+th.mat-header-cell, td.mat-cell {
+  text-align: center;
+  padding: 8px;
+}
+
+th.mat-header-cell {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: bold;
+}
+
+td.mat-cell {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+button {
+  margin-bottom: 20px;
+}
+
+.mat-button-edit {
+  background-color: #33aa4c; 
+  color: #fff; 
+  margin-right: 10px; 
+}
+
+.mat-button-delete {
+  background-color: #f44336; 
+  color: #fff;
+}

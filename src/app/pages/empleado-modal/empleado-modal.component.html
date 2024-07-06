@@ -1,27 +1,43 @@
-<h2 mat-dialog-title>Agregar Empleado</h2>
-<form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <mat-label>Nombres</mat-label>
-    <input matInput formControlName="nombres">
-  </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <mat-label>Apellidos</mat-label>
-    <input matInput formControlName="apellidos">
-  </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <mat-label>Edad</mat-label>
-    <input matInput formControlName="edad" type="number">
-  </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <mat-label>Fecha de Nacimiento</mat-label>
-    <input matInput formControlName="fechaNacimiento" type="date">
-  </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <mat-label>Salario</mat-label>
-    <input matInput formControlName="salario" type="number">
-  </mat-form-field>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit">Guardar</button>
-  </div>
-</form>
+<h1 mat-dialog-title>{{ data.modo === 'crear' ? 'Registrar Empleado' : 'Editar Empleado' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="empleadoForm">
+    <mat-form-field appearance="fill">
+      <mat-label>ID Empleado</mat-label>
+      <input matInput type="number" formControlName="idEmpleado" [disabled]="data.modo === 'editar'">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>ID Usuario</mat-label>
+      <input matInput type="number" formControlName="idUsuario">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombres</mat-label>
+      <input matInput formControlName="nombres">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Apellido Paterno</mat-label>
+      <input matInput formControlName="apellidoPaterno">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Apellido Materno</mat-label>
+      <input matInput formControlName="apellidoMaterno">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Edad</mat-label>
+      <input matInput type="number" formControlName="edad">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de Nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Salario</mat-label>
+      <input matInput type="number" formControlName="salario">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelar()">Cancelar</button>
+  <button mat-button color="primary" (click)="onGuardar()">Guardar</button>
+</div>

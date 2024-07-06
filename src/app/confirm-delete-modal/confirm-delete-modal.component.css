@@ -1,0 +1,10 @@
+.mat-button-eliminar {
+    background-color: #33aa4c; 
+    color: #fff; 
+    margin-right: 10px; 
+  }
+  
+  .mat-button-cancelar {
+    background-color: #f44336; 
+    color: #fff;
+  }
