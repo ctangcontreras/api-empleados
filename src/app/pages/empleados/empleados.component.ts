@@ -71,7 +71,10 @@ export class EmpleadosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.empleadoService.deleteEmpleado(id).subscribe(() => {
+        let a : any ={
+          "usuarioElimina":1
+      };
+        this.empleadoService.deleteEmpleado(id,a ).subscribe(() => {
           this.listarEmpleados();
           this.toastr.success('Empleado eliminado exitosamente', 'Éxito');
         });

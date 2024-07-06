@@ -31,13 +31,13 @@ export class EmpleadoService {
   }
 
   updateEmpleado(empleado: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/actualizar`, empleado).pipe(
+    return this.http.put<any>(`${this.apiUrl}/actualizar/${empleado.idEmpleado}`, empleado).pipe(
       catchError(this.handleError)
     );
   }
 
-  deleteEmpleado(empleado: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/delete`, empleado).pipe(
+  deleteEmpleado(idEmpleado: number, empleado:any): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/delete/${idEmpleado}`, { body: empleado }).pipe(
       catchError(this.handleError)
     );
   }
