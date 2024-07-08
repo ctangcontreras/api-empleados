@@ -15,9 +15,11 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials).pipe(
       tap(response => {
+        console.log('x');
         if (response && response.data && response.data.token) {
           this.isAuthenticated = true;
           localStorage.setItem('authToken', response.data.token);
+          localStorage.setItem('usuario',  JSON.stringify({username: response.data.username, idUsuario : response.data.idUsuario}));
         } else {
           this.isAuthenticated = false;
         }
@@ -35,6 +37,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticated;
+    const token = localStorage.getItem('authToken');
+    return !!token;
   }
 }

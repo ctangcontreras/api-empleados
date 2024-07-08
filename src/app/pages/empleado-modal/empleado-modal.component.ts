@@ -23,7 +23,7 @@ export class EmpleadoModalComponent implements OnInit {
       edad: [data.empleado?.edad || '', Validators.required],
       fechaNacimiento: [this.convertirFecha(data.empleado?.fechaNacimiento) || '', Validators.required],
       salario: [data.empleado?.salario || '', Validators.required],
-      idUsuario: [data.empleado?.idUsuario || '', Validators.required],
+      /* idUsuario: [data.empleado?.idUsuario || '', Validators.required], */
     });
   }
 

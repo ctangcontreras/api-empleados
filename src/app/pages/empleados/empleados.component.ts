@@ -14,11 +14,18 @@ import { ConfirmDeleteModalComponent } from 'src/app/confirm-delete-modal/confir
 export class EmpleadosComponent implements OnInit {
   empleados = new MatTableDataSource<any>([]);
   displayedColumns: string[] = ['id', 'nombres', 'apellidos', 'edad', 'fechaNacimiento', 'salario', 'opciones'];
-
+  usuario :any = {} ;
   constructor(private empleadoService: EmpleadoService, public dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.listarEmpleados();
+    this.usuario= this.getItem("usuario");
+  }
+
+
+  getItem(key: string): any {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
   }
 
   private listarEmpleados() {
@@ -37,6 +44,7 @@ export class EmpleadosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(resultado => {
       if (resultado) {
+        resultado.idUsuario = this.usuario.idUsuario;
         this.empleadoService.saveEmpleado(resultado).subscribe(() => {
           this.listarEmpleados();
           this.toastr.success('Empleado registrado exitosamente', 'Éxito');
@@ -54,6 +62,7 @@ export class EmpleadosComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(empleadoActualizado => {
         if (empleadoActualizado) {
+          empleadoActualizado.idUsuario = this.usuario.idUsuario;
           this.empleadoService.updateEmpleado(empleadoActualizado).subscribe(() => {
             this.listarEmpleados();
             this.toastr.success('Empleado actualizado exitosamente', 'Éxito');
